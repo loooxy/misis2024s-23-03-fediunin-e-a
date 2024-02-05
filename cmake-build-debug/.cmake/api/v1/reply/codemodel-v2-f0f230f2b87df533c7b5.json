@@ -1,0 +1,190 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						5
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "prj.lab",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-prj.lab-Debug-6b850684795bf15e457d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "prj.lab"
+				},
+				{
+					"build" : "prj.lab/complex",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-prj.lab.complex-Debug-1b05e44d13016e4a12fa.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "prj.lab/complex",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "prj.lab/rational",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-prj.lab.rational-Debug-9eae32e96e63a22f72c0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "prj.lab/rational",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "prj.lab/dynarr",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-prj.lab.dynarr-Debug-76ee70903b1376fcb6ef.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "prj.lab/dynarr",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "prj.test",
+					"jsonFile" : "directory-prj.test-Debug-5c21977a58eb6220d410.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "prj.test",
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"name" : "misis2023f-23-03-fediunin-e-a",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "complex::@f01986494a78af0cc1db",
+					"jsonFile" : "target-complex-Debug-b7aa03e6042e3a618f08.json",
+					"name" : "complex",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "dynarr::@0ea11cdcf82ac2213dcb",
+					"jsonFile" : "target-dynarr-Debug-bd695d433a5cbd0b6982.json",
+					"name" : "dynarr",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "rational::@fd4f4962d1a8e6d13fee",
+					"jsonFile" : "target-rational-Debug-ec850dfc70b9fe57208d.json",
+					"name" : "rational",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "test_complex::@03e42033715ba8c02d37",
+					"jsonFile" : "target-test_complex-Debug-d5523c378f16adc6416c.json",
+					"name" : "test_complex",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "test_dynarr::@03e42033715ba8c02d37",
+					"jsonFile" : "target-test_dynarr-Debug-32c6479b2e245e2fb6e4.json",
+					"name" : "test_dynarr",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "test_rational::@03e42033715ba8c02d37",
+					"jsonFile" : "target-test_rational-Debug-a781c3483bf1df7d6473.json",
+					"name" : "test_rational",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/kikikhakiri/CLionProjects/misis2024s-23-03-fediunin-e-a/cmake-build-debug",
+		"source" : "/Users/kikikhakiri/CLionProjects/misis2024s-23-03-fediunin-e-a"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}
