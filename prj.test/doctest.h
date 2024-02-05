@@ -566,7 +566,7 @@ DOCTEST_INTERFACE extern bool is_running_in_test;
 #endif
 
 // A 24 byte string class (can be as small as 17 for x64 and 13 for x86) that can hold strings with length
-// of up to 23 chars on the stack before going on the heap - the last byte of the buffer is used for:
+// of up to 23 chars on the stackarr before going on the heap - the last byte of the buffer is used for:
 // - "is small" bit - the highest bit - if "0" then it is small - otherwise its "1" (128)
 // - if small - capacity left before going on the heap - using the lowest 5 bits
 // - if small - 2 bits are left unused - the second and third highest ones
@@ -3334,21 +3334,21 @@ struct Endianness
 namespace detail {
 DOCTEST_THREAD_LOCAL class
 {
-  std::vector<std::streampos> stack;
+  std::vector<std::streampos> stackarr;
   std::stringstream           ss;
 
  public:
   std::ostream* push() {
-    stack.push_back(ss.tellp());
+    stackarr.push_back(ss.tellp());
     return &ss;
   }
 
   String pop() {
-    if (stack.empty())
+    if (stackarr.empty())
       DOCTEST_INTERNAL_ERROR("TLSS was empty when trying to pop!");
 
-    std::streampos pos = stack.back();
-    stack.pop_back();
+    std::streampos pos = stackarr.back();
+    stackarr.pop_back();
     unsigned sz = static_cast<unsigned>(ss.tellp() - pos);
     ss.rdbuf()->pubseekpos(pos, std::ios::in | std::ios::out);
     return String(ss, sz);
@@ -3665,7 +3665,7 @@ String& String::operator+=(const String& other) {
   const size_type total_size  = my_old_size + other_size;
   if(isOnStack()) {
     if(total_size < len) {
-      // append to the current stack space
+      // append to the current stackarr space
       memcpy(buf + my_old_size, other.c_str(), other_size + 1);
       // NOLINTNEXTLINE(clang-analyzer-cplusplus.NewDeleteLeaks)
       setLast(last - total_size);
@@ -4679,7 +4679,7 @@ struct SignalDefs
 
         FatalConditionHandler() {
             isSet = true;
-            // 32k seems enough for doctest to handle stack overflow,
+            // 32k seems enough for doctest to handle stackarr overflow,
             // but the value was found experimentally, so there is no strong guarantee
             guaranteeSize = 32 * 1024;
             // Register an unhandled exception filter
@@ -4841,7 +4841,7 @@ struct FatalConditionHandler
       for(std::size_t i = 0; i < DOCTEST_COUNTOF(signalDefs); ++i) {
         sigaction(signalDefs[i].id, &oldSigActions[i], nullptr);
       }
-      // Return the old stack
+      // Return the old stackarr
       sigaltstack(&oldSigStack, nullptr);
       isSet = false;
     }
