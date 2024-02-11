@@ -2,6 +2,8 @@
 // Created by Егор Федюнин on 05.02.2024.
 //
 #include "stackarr/stackarr.hpp"
+#include <stdexcept>
+
 
 StackArr::StackArr(const StackArr &rhs)
   : size_(rhs.size_), capacity_(rhs.size_) {
@@ -42,8 +44,12 @@ void StackArr::Pop() noexcept {
 
 }
 bool StackArr::IsEmpty() noexcept {
-  return false;
+  return size_ == 0;
 }
-const Complex &StackArr::Top() {
-
+const Complex& StackArr::Top() {
+  if (size_ == 0){
+    throw std::out_of_range("Index out of range");
+  }else{
+    return data_[size_-1];
+  }
 }
