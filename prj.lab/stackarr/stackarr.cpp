@@ -24,7 +24,7 @@ StackArr &StackArr::operator=(const StackArr &rhs) {
   }
   return *this;
 }
-void StackArr::Push(const Complex &) {
+void StackArr::Push(const Complex &rhs) {
   if (size_ + 1 > capacity_) {
     std::ptrdiff_t new_capacity = (size_ + 1) * 2;
     auto new_data = new Complex[new_capacity] { {0,0}};
@@ -33,15 +33,14 @@ void StackArr::Push(const Complex &) {
     delete[] data_;
     data_ = new_data;
     capacity_ = new_capacity;
-  } else {
-    for (std::ptrdiff_t i = size_; i < size_ + 1; i++) {
-      data_[i] = {0,0};
-    }
   }
   size_ += 1;
+  data_[size_-1] = rhs;
 }
 void StackArr::Pop() noexcept {
-
+  if(size_ != 0){
+    size_--;
+  }
 }
 bool StackArr::IsEmpty() noexcept {
   return size_ == 0;
@@ -52,4 +51,9 @@ const Complex& StackArr::Top() {
   }else{
     return data_[size_-1];
   }
+}
+StackArr::~StackArr() {
+  delete[] data_;
+  data_ = nullptr;
+  capacity_ = 0;
 }
