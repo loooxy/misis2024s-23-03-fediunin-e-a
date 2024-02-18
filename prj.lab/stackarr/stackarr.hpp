@@ -2,25 +2,33 @@
 // Created by Егор Федюнин on 05.02.2024.
 //
 
+#pragma once
 #ifndef MISIS2024S_23_03_FEDIUNIN_E_A_PRJ_LAB_STACK_STACKARR_HPP_
 #define MISIS2024S_23_03_FEDIUNIN_E_A_PRJ_LAB_STACK_STACKARR_HPP_
 
 #include "complex/complex.hpp"
 
-class StackArr{
+class StackArr {
  public:
-  StackArr() = default;
+  [[nodiscard]] StackArr() = default;
 
-  StackArr(const StackArr&);
+  [[nodiscard]] StackArr(const StackArr&);
 
   ~StackArr();
 
-  StackArr& operator=(const StackArr&);
+  [[nodiscard]]StackArr& operator=(const StackArr&);
 
-  void Push(const Complex&);
+  void Push(const Complex& val);
+
   void Pop() noexcept;
-  bool IsEmpty() noexcept;
-  const Complex& Top();
+
+  [[nodiscard]] bool IsEmpty() const noexcept;
+
+  [[nodiscard]] const Complex& Top() const;
+
+  [[nodiscard]] Complex& Top();
+
+  void Clear() noexcept;
 
  private:
   std::ptrdiff_t size_ = 0;
