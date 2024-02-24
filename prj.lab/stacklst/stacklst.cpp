@@ -7,12 +7,12 @@
 StackLst::StackLst(const StackLst& lst) {
   if (lst.head_) {
     head_ = new Node(lst.head_->v, nullptr);
-    Node* pl = head_->prev;
-    Node* pr = lst.head_->prev;
+    Node* pl = head_->next;
+    Node* pr = lst.head_->next;
     while (pr != nullptr) {
       pl = new Node(pr->v, nullptr);
-      pr = pr->prev;
-      pl = pl->prev;
+      pr = pr->next;
+      pl = pl->next;
     }
   }
 }
@@ -24,12 +24,12 @@ StackLst& StackLst::operator=(const StackLst& lst) {
     if (lst.head_) {
       Clear();
       head_ = new Node(lst.head_->v, nullptr);
-      Node* pl = head_->prev;
-      Node* pr = lst.head_->prev;
+      Node* pl = head_->next;
+      Node* pr = lst.head_->next;
       while (pr != nullptr) {
         pl = new Node(pr->v, nullptr);
-        pr = pr->prev;
-        pl = pl->prev;
+        pr = pr->next;
+        pl = pl->next;
       }
     }
   }
@@ -41,7 +41,7 @@ void StackLst::Push(const Complex& val) {
 void StackLst::Pop() noexcept {
   if (head_ != nullptr) {
     Node* head = head_;
-    head_ = head->prev;
+    head_ = head->next;
     delete head;
   }
 }

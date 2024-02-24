@@ -31,9 +31,9 @@ class StackLst{
   void Clear() noexcept;
  private:
   struct Node{
-    Node(Complex v, Node* ptr) : v{v}, prev{ptr}{};
+    Node(Complex v, Node* ptr) : v{v}, next{ptr}{};
     Complex v = {0,0};
-    Node* prev = nullptr;
+    Node* next = nullptr;
   };
 
   Node* head_ = nullptr;
