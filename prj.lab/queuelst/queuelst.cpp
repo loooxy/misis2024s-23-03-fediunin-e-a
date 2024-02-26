@@ -49,6 +49,7 @@ QueueLst& QueueLst::operator=(const QueueLst& rhs) {
       }
     }
   }
+  return *this;
 }
 void QueueLst::Push(const Complex& val) {
   if(head_) {

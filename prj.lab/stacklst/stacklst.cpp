@@ -33,6 +33,7 @@ StackLst& StackLst::operator=(const StackLst& lst) {
       }
     }
   }
+  return *this;
 }
 void StackLst::Push(const Complex& val) {
   Node* new_head = new Node(val, head_);
