@@ -1,10 +1,11 @@
 //
-// Created by Егор Федюнин on 19.02.2024.
+// Created by Егор Федюнин on 04.03.2024.
 //
-#include "queuelst.hpp"
+
+#include "queuelstpr.hpp"
 #include <stdexcept>
 
-QueueLst::QueueLst(const QueueLst& lst) {
+QueueLstPr::QueueLstPr(const QueueLstPr& lst) {
   if (lst.head_) {
     head_ = new Node(lst.head_->v, nullptr);
     Node* pl = head_->next;
@@ -16,10 +17,10 @@ QueueLst::QueueLst(const QueueLst& lst) {
     }
   }
 }
-QueueLst::~QueueLst() {
+QueueLstPr::~QueueLstPr() {
   Clear();
 }
-QueueLst& QueueLst::operator=(const QueueLst& lst) {
+QueueLstPr& QueueLstPr::operator=(const QueueLstPr& lst) {
   if (this != &lst) {
     if (lst.head_) {
       Clear();
@@ -35,38 +36,50 @@ QueueLst& QueueLst::operator=(const QueueLst& lst) {
   }
   return *this;
 }
-void QueueLst::Push(const Complex& val) {
+void QueueLstPr::Push(const float& val) {
   if (head_) {
+    bool flag = false;
     Node* cur = head_;
-    while (cur->next != nullptr) {
-      cur = cur->next;
+    if (val <= head_->v) {
+      Node* tmp = new Node(val, head_);
+      head_ = tmp;
+    } else {
+      while (cur->next != nullptr) {
+        if (val <= cur->next->v) {
+          Node* tmp = new Node(val, cur->next);
+          cur->next = tmp;
+          flag = true;
+          break;
+        }
+        cur = cur->next;
+      }
+      if(!flag)cur->next = new Node(val, nullptr);
     }
-    cur->next = new Node(val, nullptr);
   } else {
     head_ = new Node(val, nullptr);
   }
 }
-bool QueueLst::IsEmpty() const noexcept {
+bool QueueLstPr::IsEmpty() const noexcept {
   return head_ == nullptr;
 }
-const Complex& QueueLst::Top() const {
+const float& QueueLstPr::Top() const {
   if (head_ == nullptr) {
     throw std::out_of_range("Index out of range");
   }
   return head_->v;
 }
-Complex& QueueLst::Top() {
+float& QueueLstPr::Top() {
   if (head_ == nullptr) {
     throw std::out_of_range("Index out of range");
   }
   return head_->v;
 }
-void QueueLst::Clear() noexcept {
+void QueueLstPr::Clear() noexcept {
   while (!IsEmpty()) {
     Pop();
   }
 }
-void QueueLst::Pop() noexcept {
+void QueueLstPr::Pop() noexcept {
   if (head_) {
     Node* cur = head_->next;
     delete head_;
