@@ -7,10 +7,10 @@
 QueueLst::QueueLst(const QueueLst& lst) {
   if (lst.head_) {
     head_ = new Node(lst.head_->v, nullptr);
-    Node* pl = head_->next;
+    Node* pl = head_;
     Node* pr = lst.head_->next;
     while (pr != nullptr) {
-      pl = new Node(pr->v, nullptr);
+      pl->next = new Node(pr->v, nullptr);
       pr = pr->next;
       pl = pl->next;
     }
