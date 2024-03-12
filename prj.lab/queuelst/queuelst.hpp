@@ -35,6 +35,7 @@ class QueueLst{
     Node* next = nullptr;
   };
 
+  Node* tail_ = nullptr;
   Node* head_ = nullptr;
 };
 

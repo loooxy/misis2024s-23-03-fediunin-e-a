@@ -28,6 +28,11 @@ TEST_CASE("Testing StackArr class") {
     arr.Pop();
     CHECK(arr.Top() == val);
     CHECK(arr1.Top() == val1);
+    StackArr arr2 = arr1;
+    CHECK(arr2.Top() == val1);
+    arr1.Pop();
+    CHECK(arr2.Top() == val1);
+    CHECK(arr1.Top() == val);
   }
 }
 

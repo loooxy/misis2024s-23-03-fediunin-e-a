@@ -10,13 +10,13 @@
 
 class StackLst{
  public:
-  [[nodiscard]] StackLst() = default;
+  StackLst() = default;
 
-  [[nodiscard]] StackLst(const StackLst&);
+  StackLst(const StackLst&);
 
   ~StackLst();
 
-  [[nodiscard]]StackLst& operator=(const StackLst&);
+  [[nodiscard]] StackLst& operator=(const StackLst&);
 
   void Push(const Complex& val);
 
@@ -29,10 +29,11 @@ class StackLst{
   [[nodiscard]] Complex& Top();
 
   void Clear() noexcept;
+
  private:
   struct Node{
     Node(Complex v, Node* ptr) : v{v}, next{ptr}{};
-    Complex v = {0,0};
+    Complex v;
     Node* next = nullptr;
   };
 

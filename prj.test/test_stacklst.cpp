@@ -4,38 +4,47 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-
-
 #include <stacklst/stacklst.hpp>
 
-TEST_CASE("Testing StackArr class") {
-  SUBCASE("Testing methods"){
-    StackLst arr;
-    Complex val = {1,0};
-    Complex val1 = {3,4};
-    arr.Push(val);
-    CHECK(arr.Top() == val);
-    arr.Push(val1);
-    CHECK(arr.Top() == val1);
-    arr.Pop();
-    CHECK(arr.Top() == val);
-    arr.Pop();
-    CHECK(arr.IsEmpty());
-    arr.Push(val);
-    arr.Push(val1);
-    StackLst arr1{arr};
-    CHECK(arr1.Top() == val1);
-    arr.Pop();
-    CHECK(arr.Top() == val);
-    CHECK(arr1.Top() == val1);
-    arr.Clear();
-    arr.Push(val);
-    arr.Push(val1);
-    StackLst arr2 = arr;
-    CHECK(arr2.Top() == val1);
-    arr.Pop();
-    CHECK(arr2.Top() == val1);
-    CHECK(arr.Top() == val);
+
+TEST_CASE("appr") {
+  SUBCASE("appr with empty") {
+    StackLst a;
+    StackLst b;
+    for (int i = 0; i < 5; ++i)
+      b.Push(Complex());
+    a = b;
+
+    b.Push(Complex());
+  }
+  SUBCASE("appr with full") {
+    StackLst a;
+    StackLst b;
+    for (int i = 0; i < 5; ++i)
+    {
+      a.Push(Complex());
+      b.Push(Complex());
+    }
+    a = b;
+
+    b.Push(Complex());
   }
 }
 
+TEST_CASE("Push, Pop & Top"){
+  StackLst a;
+  for (int i = 0; i < 1000; ++i)
+  {
+    a.Push(Complex(i, i));
+    CHECK(a.Top() == Complex(i, i));
+  }
+
+  for (int i = 998; i >= 0; --i)
+  {
+    a.Pop();
+    CHECK(a.Top() == Complex(i, i));
+  }
+  a.Pop();
+  CHECK_THROWS(a.Top());
+  a.Pop();
+}

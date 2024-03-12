@@ -5,38 +5,71 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-
-
 #include <queuelst/queuelst.hpp>
 
-TEST_CASE("Testing StackArr class") {
-  SUBCASE("Testing methods"){
-    QueueLst arr;
-    Complex val = {1,0};
-    Complex val1 = {3,4};
-    arr.Push(val);
-    CHECK(arr.Top() == val);
-    arr.Push(val1);
-    CHECK(arr.Top() == val);
-    arr.Pop();
-    CHECK(arr.Top() == val1);
-    arr.Pop();
-    CHECK(arr.IsEmpty());
-    arr.Push(val);
-    arr.Push(val1);
-    QueueLst arr1{arr};
-    CHECK(arr1.Top() == val);
-    arr.Pop();
-    CHECK(arr.Top() == val1);
-    CHECK(arr1.Top() == val);
-    arr.Clear();
-    arr.Push(val1);
-    arr.Push(val);
-    QueueLst arr2 = arr;
-    CHECK(arr2.Top() == val);
-    arr.Pop();
-    CHECK(arr2.Top() == val);
-    CHECK(arr.Top() == val1);
+TEST_CASE("cons") {
+  SUBCASE("default") {
+    QueueLst a;
+
+  }
+  SUBCASE("copy") {
+    QueueLst a;
+    for (int i = 0; i < 500; ++i)
+      a.Push(Complex(1, i));
+
+    QueueLst b(a);
+
+    CHECK(b.Top() == a.Top());
+
+    b.Push(Complex());
+
+    CHECK(b.Top() == a.Top());
   }
 }
 
+TEST_CASE("appr") {
+  SUBCASE("appr with empty") {
+    QueueLst a;
+    QueueLst b;
+    for (int i = 0; i < 5; ++i)
+      b.Push(Complex(1, i));
+    a = b;
+
+    CHECK(b.Top() == a.Top());
+
+    b.Push(Complex());
+    CHECK(b.Top() == a.Top());
+  }
+  SUBCASE("appr with full") {
+    QueueLst a;
+    QueueLst b;
+    for (int i = 0; i < 5; ++i) {
+      a.Push(Complex(1, i));
+      b.Push(Complex(i, 2));
+    }
+    a = b;
+    CHECK(b.Top() == a.Top());
+    b.Push(Complex());
+
+    CHECK(b.Top() == a.Top());
+  }
+}
+
+TEST_CASE("Push, Pop & Top") {
+  QueueLst a;
+
+  for (int i = 0; i < 1000; ++i) {
+    a.Push(Complex(i, i));
+
+    CHECK(a.Top() == Complex(0, 0));
+  }
+
+  for (int i = 1; i < 1000; ++i) {
+    a.Pop();
+
+    CHECK(a.Top() == Complex(i, i));
+  }
+  a.Pop();
+  CHECK_THROWS(a.Top());
+  a.Pop();
+}
