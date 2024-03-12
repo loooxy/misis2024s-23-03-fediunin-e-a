@@ -1,8 +1,4 @@
-CHECK: 20240312-130546
-OK: file codeforces.id is correct
-OK: folder prj.codeforces structure is correct
-OK: CMake generator successed
-OK: CMake build (MSVC x64) successed
+CHECK: 20240312-191226
 STATUS: lab complex - test-failed
 STATUS: lab complex_io - test-failed
 STATUS: lab complex_m - test-failed
