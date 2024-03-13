@@ -3,6 +3,7 @@
 //
 #include <stdexcept>
 #include <queuearr/queuearr.hpp>
+#include <algorithm>
 
 QueueArr::QueueArr() {
   mass_ = new Complex[capacity_];
