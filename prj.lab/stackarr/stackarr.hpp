@@ -14,9 +14,13 @@ class StackArr {
 
   [[nodiscard]] StackArr(const StackArr&);
 
+  [[nodiscard]] StackArr(StackArr&&) noexcept;
+
   ~StackArr();
 
   [[nodiscard]]StackArr& operator=(const StackArr&);
+
+  [[nodiscard]]StackArr& operator=(StackArr&&) noexcept;
 
   void Push(const Complex& val);
 

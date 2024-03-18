@@ -129,3 +129,11 @@ void QueueArr::Clear() noexcept {
   delete[] mass_;
   mass_ = new Complex[capacity_];
 }
+QueueArr::QueueArr(QueueArr&& rhs) noexcept {
+  std::swap(*this, rhs);
+  rhs.mass_ = nullptr;
+}
+QueueArr& QueueArr::operator=(QueueArr&& rhs) {
+  std::swap(*this, rhs);
+  rhs.mass_ = nullptr;
+}

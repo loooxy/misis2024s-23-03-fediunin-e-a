@@ -16,9 +16,13 @@ class QueueArr {
 
   QueueArr(const QueueArr&);
 
+  QueueArr(QueueArr&& rhs) noexcept ;
+
   ~QueueArr();
 
   [[nodiscard]] QueueArr& operator=(const QueueArr&);
+
+  [[nodiscard]] QueueArr& operator=(QueueArr&& rhs);
 
   [[nodiscard]] bool IsEmpty() const noexcept;
 

@@ -13,9 +13,13 @@ class QueueLst{
 
   [[nodiscard]] QueueLst(const QueueLst&);
 
+  [[nodiscard]] QueueLst(QueueLst&&) noexcept;
+
   ~QueueLst();
 
   [[nodiscard]]QueueLst& operator=(const QueueLst&);
+
+  [[nodiscard]]QueueLst& operator=(QueueLst&&) noexcept;
 
   void Push(const Complex& val);
 

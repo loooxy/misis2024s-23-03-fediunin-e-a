@@ -12,9 +12,13 @@ class QueueLstPr{
 
   [[nodiscard]] QueueLstPr(const QueueLstPr&);
 
+  [[nodiscard]] QueueLstPr(QueueLstPr&&) noexcept;
+
   ~QueueLstPr();
 
   [[nodiscard]]QueueLstPr& operator=(const QueueLstPr&);
+
+  [[nodiscard]]QueueLstPr& operator=(QueueLstPr&&) noexcept;
 
   void Push(const float& val);
 

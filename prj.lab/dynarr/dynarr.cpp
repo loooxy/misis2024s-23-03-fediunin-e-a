@@ -4,6 +4,11 @@
 #include "dynarr/dynarr.hpp"
 #include <stdexcept>
 
+DynArr::DynArr(DynArr&& rhs)noexcept{
+  std::swap(*this, rhs);
+  rhs.data_ = nullptr;
+}
+
 DynArr::DynArr(const DynArr& rhs)
     : size_(rhs.size_), capacity_(rhs.size_) {
   data_ = new float[rhs.size_];
@@ -71,4 +76,8 @@ const float& DynArr::operator[](const std::ptrdiff_t idx) const {
     throw std::out_of_range("Index out of range");
   }
   return data_[idx];
+}
+DynArr& DynArr::operator=(DynArr&& dynarr) noexcept {
+  std::swap(*this, dynarr);
+  dynarr.data_ = nullptr;
 }

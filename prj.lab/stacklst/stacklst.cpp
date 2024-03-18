@@ -4,6 +4,11 @@
 #include "stacklst/stacklst.hpp"
 #include <stdexcept>
 
+StackLst::StackLst(StackLst&& rhs) noexcept {
+  std::swap(*this, rhs);
+  rhs.head_ = nullptr;
+}
+
 StackLst::StackLst(const StackLst& lst) {
   if (lst.head_) {
     head_ = new Node(lst.head_->v, nullptr);
@@ -35,6 +40,12 @@ StackLst& StackLst::operator=(const StackLst& lst) {
   }
   return *this;
 }
+
+StackLst& StackLst::operator=(StackLst&& lst) noexcept{
+  std::swap(*this, lst);
+  lst.head_ = nullptr;
+}
+
 void StackLst::Push(const Complex& val) {
   Node* new_head = new Node(val, head_);
   head_ = new_head;

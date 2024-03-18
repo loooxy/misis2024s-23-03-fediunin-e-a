@@ -9,11 +9,13 @@
 
 class DynArr {
  public:
-  [[nodiscard]] DynArr() = default;
-  [[nodiscard]] DynArr(const DynArr& rhs);
-  [[nodiscard]] DynArr(const std::ptrdiff_t size);
+  DynArr() = default;
+  DynArr(const DynArr& rhs);
+  DynArr(DynArr&& rhs) noexcept;
+  [[nodiscard]]DynArr(const std::ptrdiff_t size);
   ~DynArr();
-  [[nodiscard]]DynArr& operator=(const DynArr& dynarr);
+  DynArr& operator=(const DynArr& dynarr);
+  DynArr& operator=(DynArr&& dynarr) noexcept;
 
   [[nodiscard]]std::ptrdiff_t Size() const noexcept { return size_; }
   [[nodiscard]]std::ptrdiff_t Capacity() const noexcept { return capacity_; }

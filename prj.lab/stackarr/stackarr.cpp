@@ -5,6 +5,11 @@
 #include <stdexcept>
 #include <algorithm>
 
+StackArr::StackArr(StackArr&& rhs) noexcept {
+  std::swap(*this, rhs);
+  rhs.data_ = nullptr;
+}
+
 StackArr::StackArr(const StackArr& rhs)
     : size_(rhs.size_), capacity_(rhs.size_) {
   data_ = new Complex[rhs.size_];
@@ -24,6 +29,12 @@ StackArr& StackArr::operator=(const StackArr& rhs) {
   }
   return *this;
 }
+
+StackArr& StackArr::operator=(StackArr&& rhs) noexcept{
+  std::swap(*this, rhs);
+  rhs.data_ = nullptr;
+}
+
 void StackArr::Push(const Complex& val) {
   if (data_ == nullptr) {
     capacity_ = 8;

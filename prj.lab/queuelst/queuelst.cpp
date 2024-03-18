@@ -73,4 +73,12 @@ void QueueLst::Pop() noexcept {
     head_ = cur;
   }
 }
+QueueLst::QueueLst(QueueLst&& rhs) noexcept {
+  std::swap(*this, rhs);
+}
+
+QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept{
+  std::swap(*this, rhs);
+  rhs.head_ = nullptr;
+}
 

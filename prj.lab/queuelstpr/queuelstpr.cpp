@@ -86,4 +86,13 @@ void QueueLstPr::Pop() noexcept {
     head_ = cur;
   }
 }
+QueueLstPr::QueueLstPr(QueueLstPr&& rhs) noexcept {
+  std::swap(*this, rhs);
+  rhs.head_ = nullptr;
+}
+
+QueueLstPr& QueueLstPr::operator=(QueueLstPr&& rhs) noexcept{
+  std::swap(*this, rhs);
+  rhs.head_ = nullptr;
+}
 

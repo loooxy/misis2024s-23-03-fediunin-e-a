@@ -14,9 +14,13 @@ class StackLst{
 
   StackLst(const StackLst&);
 
+  StackLst(StackLst&&) noexcept;
+
   ~StackLst();
 
   [[nodiscard]] StackLst& operator=(const StackLst&);
+
+  [[nodiscard]] StackLst& operator=(StackLst&&) noexcept;
 
   void Push(const Complex& val);
 
