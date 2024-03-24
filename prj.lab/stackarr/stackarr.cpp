@@ -6,7 +6,9 @@
 #include <algorithm>
 
 StackArr::StackArr(StackArr&& rhs) noexcept {
-  std::swap(*this, rhs);
+  std::swap(size_, rhs.size_);
+  std::swap(capacity_, rhs.capacity_);
+  std::swap(data_, rhs.data_);
   rhs.data_ = nullptr;
 }
 
@@ -31,7 +33,9 @@ StackArr& StackArr::operator=(const StackArr& rhs) {
 }
 
 StackArr& StackArr::operator=(StackArr&& rhs) noexcept{
-  std::swap(*this, rhs);
+  std::swap(size_, rhs.size_);
+  std::swap(capacity_, rhs.capacity_);
+  std::swap(data_, rhs.data_);
   rhs.data_ = nullptr;
 }
 

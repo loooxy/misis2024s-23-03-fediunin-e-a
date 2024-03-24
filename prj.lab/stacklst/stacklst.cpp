@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 StackLst::StackLst(StackLst&& rhs) noexcept {
-  std::swap(*this, rhs);
+  std::swap(head_, rhs.head_);
   rhs.head_ = nullptr;
 }
 
@@ -42,7 +42,7 @@ StackLst& StackLst::operator=(const StackLst& lst) {
 }
 
 StackLst& StackLst::operator=(StackLst&& lst) noexcept{
-  std::swap(*this, lst);
+  std::swap(head_, lst.head_);
   lst.head_ = nullptr;
 }
 

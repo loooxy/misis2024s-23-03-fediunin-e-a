@@ -47,7 +47,7 @@ class QueueArr {
   std::ptrdiff_t begin = 0;
   std::ptrdiff_t end = 0;
   std::ptrdiff_t capacity_ = 10;
-  Complex* mass_ = nullptr;
+  Complex* data_ = nullptr;
 };
 
 #endif //MISIS2023F_23_03_FEDIUNIN_E_A_PRJ_LAB_QUEUEARR_QUEUEARR_H_

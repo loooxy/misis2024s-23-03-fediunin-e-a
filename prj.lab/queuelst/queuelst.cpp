@@ -74,11 +74,16 @@ void QueueLst::Pop() noexcept {
   }
 }
 QueueLst::QueueLst(QueueLst&& rhs) noexcept {
-  std::swap(*this, rhs);
+    std::swap(tail_, rhs.tail_);
+    std::swap(head_, rhs.head_);
+    rhs.tail_ = nullptr;
+    rhs.head_ = nullptr;
 }
 
 QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept{
-  std::swap(*this, rhs);
-  rhs.head_ = nullptr;
+    std::swap(tail_, rhs.tail_);
+    std::swap(head_, rhs.head_);
+    rhs.tail_ = nullptr;
+    rhs.head_ = nullptr;
 }
 

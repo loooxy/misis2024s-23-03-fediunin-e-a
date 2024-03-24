@@ -15,7 +15,7 @@ class DynArr {
   [[nodiscard]]DynArr(const std::ptrdiff_t size);
   ~DynArr();
   DynArr& operator=(const DynArr& dynarr);
-  DynArr& operator=(DynArr&& dynarr) noexcept;
+  DynArr& operator=(DynArr&& rhs) noexcept;
 
   [[nodiscard]]std::ptrdiff_t Size() const noexcept { return size_; }
   [[nodiscard]]std::ptrdiff_t Capacity() const noexcept { return capacity_; }

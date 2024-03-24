@@ -5,7 +5,9 @@
 #include <stdexcept>
 
 DynArr::DynArr(DynArr&& rhs)noexcept{
-  std::swap(*this, rhs);
+  std::swap(size_, rhs.size_);
+  std::swap(capacity_, rhs.capacity_);
+  std::swap(data_, rhs.data_);
   rhs.data_ = nullptr;
 }
 
@@ -77,7 +79,9 @@ const float& DynArr::operator[](const std::ptrdiff_t idx) const {
   }
   return data_[idx];
 }
-DynArr& DynArr::operator=(DynArr&& dynarr) noexcept {
-  std::swap(*this, dynarr);
-  dynarr.data_ = nullptr;
+DynArr& DynArr::operator=(DynArr&& rhs) noexcept {
+    std::swap(size_, rhs.size_);
+    std::swap(capacity_, rhs.capacity_);
+    std::swap(data_, rhs.data_);
+    rhs.data_ = nullptr;
 }
