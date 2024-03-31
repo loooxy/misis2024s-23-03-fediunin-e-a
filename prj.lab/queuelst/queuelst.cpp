@@ -85,5 +85,6 @@ QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept{
     std::swap(head_, rhs.head_);
     rhs.tail_ = nullptr;
     rhs.head_ = nullptr;
+    return *this;
 }
 

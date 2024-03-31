@@ -25,7 +25,7 @@ TEST_CASE("BitSet basic operations") {
 }
 
 TEST_CASE("BitProxy operations") {
-    BitSet bitset(10);
+    BitSet bitset(42);
 
     bitset[0] = true;
     CHECK(bitset[0] == true);
@@ -35,6 +35,9 @@ TEST_CASE("BitProxy operations") {
 
     bitset[5] = true;
     CHECK(bitset[5] == true);
+
+    bitset[41] = true;
+    CHECK(bitset[41] == true);
 }
 
 TEST_CASE("BitSet bitwise operations") {

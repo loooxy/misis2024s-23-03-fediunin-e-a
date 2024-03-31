@@ -87,4 +87,5 @@ DynArr &DynArr::operator=(DynArr &&rhs) noexcept {
         std::swap(data_, rhs.data_);
         rhs.data_ = nullptr;
     }
+    return *this;
 }

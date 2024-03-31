@@ -103,5 +103,6 @@ QueueLstPr::QueueLstPr(QueueLstPr &&rhs) noexcept {
 QueueLstPr &QueueLstPr::operator=(QueueLstPr &&rhs) noexcept {
   std::swap(head_, rhs.head_);
   rhs.head_ = nullptr;
+  return *this;
 }
 

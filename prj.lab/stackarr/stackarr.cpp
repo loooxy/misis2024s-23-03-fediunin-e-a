@@ -37,6 +37,7 @@ StackArr& StackArr::operator=(StackArr&& rhs) noexcept{
   std::swap(capacity_, rhs.capacity_);
   std::swap(data_, rhs.data_);
   rhs.data_ = nullptr;
+  return *this;
 }
 
 void StackArr::Push(const Complex& val) {

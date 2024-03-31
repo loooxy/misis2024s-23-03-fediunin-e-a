@@ -44,6 +44,7 @@ StackLst& StackLst::operator=(const StackLst& lst) {
 StackLst& StackLst::operator=(StackLst&& lst) noexcept{
   std::swap(head_, lst.head_);
   lst.head_ = nullptr;
+  return *this;
 }
 
 void StackLst::Push(const Complex& val) {
