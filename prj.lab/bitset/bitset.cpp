@@ -5,33 +5,44 @@
 #include <iostream>
 #include <cassert>
 
+
+
 // Constructor from an int32_t
 BitSet::BitSet(const std::int32_t size) : size_(size) {
-    assert(size > 0);
-    bits_.resize(size / 32 + (size % 32 != 0));
+  if (size <= 0) {
+    throw std::runtime_error("Size must be greater than 0");
+  }
+  bits_.resize(size / 32 + (size % 32 != 0));
 }
+
 
 // Resize the bitset
 void BitSet::Resize(const int32_t size) {
-    assert(size > 0);
-    size_ = size;
-    bits_.resize(size / 32 + (size % 32 != 0));
+  if (size <= 0) {
+    throw std::runtime_error("Size must be greater than 0");
+  }
+  size_ = size;
+  bits_.resize(size / 32 + (size % 32 != 0));
 }
 
 // Get the value of a bit at a specific index
 bool BitSet::Get(const int32_t idx) const {
-    assert(idx >= 0 && idx < size_);
-    return (bits_[idx / 32] & (1 << (idx % 32))) != 0;
+  if (!(idx >= 0 && idx < size_)) {
+    throw std::runtime_error("Index out of bounds");
+  }
+  return (bits_[idx / 32] & (1 << (idx % 32))) != 0;
 }
 
 // Set the value of a bit at a specific index
 void BitSet::Set(const int32_t idx, const bool val) {
-    assert(idx >= 0 && idx < size_);
-    if (val) {
-        bits_[idx / 32] |= (1 << (idx % 32));
-    } else {
-        bits_[idx / 32] &= ~(1 << (idx % 32));
-    }
+  if (!(idx >= 0 && idx < size_)) {
+    throw std::runtime_error("Index out of bounds");
+  }
+  if (val) {
+    bits_[idx / 32] |= (1 << (idx % 32));
+  } else {
+    bits_[idx / 32] &= ~(1 << (idx % 32));
+  }
 }
 
 // Fill the bitset with a specific value
@@ -47,29 +58,35 @@ void BitSet::Fill(const bool val) noexcept {
 
 // Bitwise AND assignment
 BitSet& BitSet::operator&=(const BitSet& rhs) {
-    assert(size_ == rhs.size_);
-    for (size_t i = 0; i < bits_.size(); ++i) {
-        bits_[i] &= rhs.bits_[i];
-    }
-    return *this;
+  if (size_ != rhs.size_) {
+    throw std::runtime_error("Sizes must be equal");
+  }
+  for (size_t i = 0; i < bits_.size(); ++i) {
+    bits_[i] &= rhs.bits_[i];
+  }
+  return *this;
 }
 
 // Bitwise OR assignment
 BitSet& BitSet::operator|=(const BitSet& rhs) {
-    assert(size_ == rhs.size_);
-    for (size_t i = 0; i < bits_.size(); ++i) {
-        bits_[i] |= rhs.bits_[i];
-    }
-    return *this;
+  if (size_ != rhs.size_) {
+    throw std::runtime_error("Sizes must be equal");
+  }
+  for (size_t i = 0; i < bits_.size(); ++i) {
+    bits_[i] |= rhs.bits_[i];
+  }
+  return *this;
 }
 
 // Bitwise XOR assignment
 BitSet& BitSet::operator^=(const BitSet& rhs) {
-    assert(size_ == rhs.size_);
-    for (size_t i = 0; i < bits_.size(); ++i) {
-        bits_[i] ^= rhs.bits_[i];
-    }
-    return *this;
+  if (size_ != rhs.size_) {
+    throw std::runtime_error("Sizes must be equal");
+  }
+  for (size_t i = 0; i < bits_.size(); ++i) {
+    bits_[i] ^= rhs.bits_[i];
+  }
+  return *this;
 }
 
 // Bitwise NOT
