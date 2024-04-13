@@ -12,10 +12,10 @@ StackLst::StackLst(StackLst&& rhs) noexcept {
 StackLst::StackLst(const StackLst& lst) {
   if (lst.head_) {
     head_ = new Node(lst.head_->v, nullptr);
-    Node* pl = head_->next;
+    Node* pl = head_;
     Node* pr = lst.head_->next;
-    while (pr != nullptr) {
-      pl = new Node(pr->v, nullptr);
+    while (pr->next) {
+      pl->next = new Node(pr->next->v, nullptr);
       pr = pr->next;
       pl = pl->next;
     }
@@ -26,15 +26,32 @@ StackLst::~StackLst() {
 }
 StackLst& StackLst::operator=(const StackLst& lst) {
   if (this != &lst) {
-    if (lst.head_) {
+    if (lst.IsEmpty()) {
       Clear();
-      head_ = new Node(lst.head_->v, nullptr);
-      Node* pl = head_->next;
-      Node* pr = lst.head_->next;
-      while (pr != nullptr) {
-        pl = new Node(pr->v, nullptr);
-        pr = pr->next;
-        pl = pl->next;
+    } else {
+      Node* p_lst = lst.head_;
+      if (IsEmpty()) {
+        head_ = new Node{lst.head_->v, nullptr};
+      } else {
+        head_->v = lst.head_->v;
+      }
+      Node* p_dst = head_;
+      while (p_lst->next) {
+        if (p_dst->next) {
+          p_dst->next->v = p_lst->next->v;
+        } else {
+          p_dst->next = new Node{ p_lst->next->v, nullptr };
+        }
+        p_lst = p_lst->next;
+        p_dst = p_dst->next;
+      }
+      if (p_dst->next) {
+        Node* tail = p_dst->next->next;
+        while (p_dst->next) {
+          delete p_dst->next;
+          p_dst->next = nullptr;
+          p_dst = tail;
+        }
       }
     }
   }
@@ -48,26 +65,25 @@ StackLst& StackLst::operator=(StackLst&& lst) noexcept{
 }
 
 void StackLst::Push(const Complex& val) {
-  Node* new_head = new Node(val, head_);
-  head_ = new_head;
+  head_ = new Node(val, head_);
 }
 void StackLst::Pop() noexcept {
   if (head_ != nullptr) {
     Node* head = head_;
-    head_ = head->next;
+    head_ = head_->next;
     delete head;
   }
 }
 bool StackLst::IsEmpty() const noexcept {
   return head_ == nullptr;
 }
-const Complex& StackLst::Top() const {
+const Complex& StackLst::Top() const & {
   if (head_ == nullptr) {
     throw std::out_of_range("Index out of range");
   }
   return head_->v;
 }
-Complex& StackLst::Top() {
+Complex& StackLst::Top() & {
   if (head_ == nullptr) {
     throw std::out_of_range("Index out of range");
   }

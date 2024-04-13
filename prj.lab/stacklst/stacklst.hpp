@@ -18,9 +18,9 @@ class StackLst{
 
   ~StackLst();
 
-  [[nodiscard]] StackLst& operator=(const StackLst&);
+  StackLst& operator=(const StackLst&);
 
-  [[nodiscard]] StackLst& operator=(StackLst&&) noexcept;
+  StackLst& operator=(StackLst&&) noexcept;
 
   void Push(const Complex& val);
 
@@ -28,9 +28,9 @@ class StackLst{
 
   [[nodiscard]] bool IsEmpty() const noexcept;
 
-  [[nodiscard]] const Complex& Top() const;
+  [[nodiscard]] const Complex& Top() const &;
 
-  [[nodiscard]] Complex& Top();
+  [[nodiscard]] Complex& Top() &;
 
   void Clear() noexcept;
 

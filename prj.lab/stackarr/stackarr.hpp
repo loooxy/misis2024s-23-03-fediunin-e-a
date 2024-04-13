@@ -10,17 +10,17 @@
 
 class StackArr {
  public:
-  [[nodiscard]] StackArr() = default;
+  StackArr() = default;
 
-  [[nodiscard]] StackArr(const StackArr&);
+  StackArr(const StackArr&);
 
-  [[nodiscard]] StackArr(StackArr&&) noexcept;
+  StackArr(StackArr&&) noexcept;
 
   ~StackArr();
 
-  [[nodiscard]]StackArr& operator=(const StackArr&);
+  StackArr& operator=(const StackArr&);
 
-  [[nodiscard]]StackArr& operator=(StackArr&&) noexcept;
+  StackArr& operator=(StackArr&&) noexcept;
 
   void Push(const Complex& val);
 
@@ -28,16 +28,16 @@ class StackArr {
 
   [[nodiscard]] bool IsEmpty() const noexcept;
 
-  [[nodiscard]] const Complex& Top() const;
+  [[nodiscard]] const Complex& Top() const&;
 
-  [[nodiscard]] Complex& Top();
+  [[nodiscard]] Complex& Top() &;
 
   void Clear() noexcept;
 
  private:
   std::ptrdiff_t size_ = 0;
-  std::ptrdiff_t capacity_ = 0;
-  Complex* data_ = nullptr;
+  std::ptrdiff_t i_top_ = -1;
+  Complex *data_ = nullptr;
 };
 
 #endif //MISIS2024S_23_03_FEDIUNIN_E_A_PRJ_LAB_STACK_STACKARR_HPP_

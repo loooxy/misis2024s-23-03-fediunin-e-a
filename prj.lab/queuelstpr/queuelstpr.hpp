@@ -8,17 +8,17 @@
 
 class QueueLstPr{
  public:
-  [[nodiscard]] QueueLstPr() = default;
+  QueueLstPr() = default;
 
-  [[nodiscard]] QueueLstPr(const QueueLstPr&);
+  QueueLstPr(const QueueLstPr&);
 
-  [[nodiscard]] QueueLstPr(QueueLstPr&&) noexcept;
+  QueueLstPr(QueueLstPr&&) noexcept;
 
   ~QueueLstPr();
 
-  [[nodiscard]]QueueLstPr& operator=(const QueueLstPr&);
+  QueueLstPr& operator=(QueueLstPr&&) noexcept;
 
-  [[nodiscard]]QueueLstPr& operator=(QueueLstPr&&) noexcept;
+  QueueLstPr& operator=(const QueueLstPr&);
 
   void Push(const float& val);
 
@@ -26,9 +26,9 @@ class QueueLstPr{
 
   [[nodiscard]] bool IsEmpty() const noexcept;
 
-  [[nodiscard]] const float& Top() const;
+  [[nodiscard]] const float& Top() const &;
 
-  [[nodiscard]] float& Top();
+  [[nodiscard]] float& Top() &;
 
   void Clear() noexcept;
  private:
@@ -37,7 +37,7 @@ class QueueLstPr{
     float v = 0.0f;
     Node* next = nullptr;
   };
-
+  Node* tail_ = nullptr;
   Node* head_ = nullptr;
 };
 

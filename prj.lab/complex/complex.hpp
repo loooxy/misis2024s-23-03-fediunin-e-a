@@ -11,15 +11,20 @@
 //!\class Complex complex.h complex/complex.h
 //!\brief  Комплексные числа
 struct Complex{
-  double re{0.0}; //!< вещественная часть комплексного числа
+  double re = 0.0; //!< вещественная часть комплексного числа
 
-  double im = {0.0}; //!< мнимая часть комплексного числа
+  double im = 0.0; //!< мнимая часть комплексного числа
 
   //! \brief Умолчательный конструктор
   [[nodiscard]] Complex() = default;
 
   //! \brief Копирующий конструктор.
   [[nodiscard]] Complex(const Complex&) = default;
+
+  [[nodiscard]] Complex(Complex&&) noexcept = default;
+
+  [[nodiscard]] Complex& operator=(Complex&&) noexcept = default;
+
 
   //! \brief Конструирование комплексного числа
   //! с заданными вещественной real и мнимой imaginary частями.
@@ -34,7 +39,6 @@ struct Complex{
   //! \brief Присваивание.
   Complex& operator=(const Complex&) = default;
 
-
   //! \brief Деструктор.
   ~Complex() = default;
 
@@ -48,11 +52,6 @@ struct Complex{
   [[nodiscard]]bool operator==(const Complex& complex) const {
     return ( std::abs(re - complex.re) < 2 * std::numeric_limits<double>::epsilon() && std::abs(im - complex.im)  <
                           2 * std::numeric_limits<double>::epsilon());
-  }
-
-  [[nodiscard]]bool operator>(const Complex& complex) const {
-    return ( std::abs(re - complex.re) < 2 * std::numeric_limits<double>::epsilon() && std::abs(im - complex.im)  <
-        2 * std::numeric_limits<double>::epsilon());
   }
 
   //! \brief Сравнение комплексного и вещественного чисел на равенство.

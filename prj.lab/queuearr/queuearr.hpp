@@ -12,7 +12,7 @@
 
 class QueueArr {
  public:
-  QueueArr();
+  QueueArr() = default;
 
   QueueArr(const QueueArr&);
 
@@ -20,9 +20,9 @@ class QueueArr {
 
   ~QueueArr();
 
-  [[nodiscard]] QueueArr& operator=(const QueueArr&);
+  QueueArr& operator=(const QueueArr&);
 
-  [[nodiscard]] QueueArr& operator=(QueueArr&& rhs);
+  QueueArr& operator=(QueueArr&& rhs) noexcept ;
 
   [[nodiscard]] bool IsEmpty() const noexcept;
 
@@ -36,18 +36,13 @@ class QueueArr {
 
   void Clear() noexcept;
 
-  int Size() const {
-    if (begin <= end)
-      return end - begin;
-    else
-      return capacity_ - begin + end;
-  }
 
  private:
-  std::ptrdiff_t begin = 0;
-  std::ptrdiff_t end = 0;
-  std::ptrdiff_t capacity_ = 10;
+  std::ptrdiff_t size_ = 0;
   Complex* data_ = nullptr;
+  std::ptrdiff_t head_ = -1;
+  std::ptrdiff_t tail_ = -1;
+  std::ptrdiff_t Count() const;
 };
 
 #endif //MISIS2023F_23_03_FEDIUNIN_E_A_PRJ_LAB_QUEUEARR_QUEUEARR_H_

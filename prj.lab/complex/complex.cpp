@@ -9,8 +9,7 @@ Complex& Complex::operator+=(const Complex& complex) noexcept {
 }
 
 Complex& Complex::operator+=(const double var) noexcept {
-  Complex tmp{var};
-  Complex::operator+=(tmp);
+  re += var;
   return *this;
 }
 
@@ -21,8 +20,7 @@ Complex& Complex::operator-=(const Complex& complex) noexcept {
 }
 
 Complex& Complex::operator-=(const double var) noexcept {
-  Complex tmp{var};
-  Complex::operator-=(tmp);
+  re -= var;
   return *this;
 }
 
