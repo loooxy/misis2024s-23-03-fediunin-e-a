@@ -78,7 +78,7 @@ public:
 
 private:
     BitSet& bitset_;
-    std::int32_t idx_;
+    std::int32_t idx_ = 0;
 };
 
 std::ostream& operator<<(std::ostream&, const BitSet&);
