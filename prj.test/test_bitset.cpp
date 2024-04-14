@@ -4,6 +4,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include "bitset/bitset.hpp"
+#include <random>
+#include <chrono>
 
 TEST_CASE("BitSet basic operations") {
     BitSet bitset(10);
@@ -83,4 +85,72 @@ TEST_CASE("BitSet serialization") {
 
     CHECK(deserializedBitset.Get(0) == true);
     CHECK(deserializedBitset.Get(1) == true);
+}
+
+TEST_CASE("Testing BitSet I/O operations") {
+  BitSet bs1(64);
+  for (int32_t i = 0; i < 64; ++i) {
+    bs1.Set(i, i % 2 == 0);  // Set even bits to 1
+  }
+
+  SUBCASE("Testing WriteTxt and ReadTxt") {
+    std::ostringstream oss;
+    bs1.WriteTxt(oss);
+
+    BitSet bs2(64);
+    std::istringstream iss(oss.str());
+    bs2.ReadTxt(iss);
+
+    CHECK(bs1 == bs2);
+  }
+
+  SUBCASE("Testing WriteBinary and ReadBinary") {
+    std::ostringstream oss;
+    bs1.WriteBinary(oss);
+
+    BitSet bs2(64);
+    std::istringstream iss(oss.str());
+    bs2.ReadBinary(iss);
+
+    CHECK(bs1 == bs2);
+
+  }
+}
+
+//TODO: Add more tests with rnd errors and their handling
+TEST_CASE("Testing BitSet I/O operations with random data") {
+  // Create a random number generator
+  unsigned seed = 100; //std::chrono::system_clock::now().time_since_epoch().count();
+  std::mt19937 generator(seed);
+
+  // Create a uniform distribution
+  std::uniform_int_distribution<int> bits_gen(0, 1);
+  std::uniform_int_distribution<std::int32_t> size_gen(1, 100);
+  std::int32_t n = size_gen(generator);
+  BitSet bs1{n};
+  for (int32_t i = 0; i < n; ++i) {
+    bs1.Set(i, bits_gen(generator));  // Set random bits
+  }
+
+  SUBCASE("Testing WriteTxt and ReadTxt") {
+    std::ostringstream oss;
+    bs1.WriteTxt(oss);
+
+    BitSet bs2(n);
+    std::istringstream iss(oss.str());
+    bs2.ReadTxt(iss);
+
+    CHECK(bs1 == bs2);
+  }
+
+  SUBCASE("Testing WriteBinary and ReadBinary") {
+    std::ostringstream oss;
+    bs1.WriteBinary(oss);
+
+    BitSet bs2(n);
+    std::istringstream iss(oss.str());
+    bs2.ReadBinary(iss);
+
+    CHECK(bs1 == bs2);
+  }
 }

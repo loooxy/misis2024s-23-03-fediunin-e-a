@@ -3,7 +3,9 @@
 //
 #include "BitSet.hpp"
 #include <iostream>
+#include <iomanip>
 #include <cassert>
+#include <cmath>
 
 
 
@@ -148,31 +150,124 @@ std::istream& operator>>(std::istream& is, BitSet& bs) {
 }
 
 // Writing to a text file
+
 std::ostream& BitSet::WriteTxt(std::ostream& os) const {
-    for (int32_t i = 0; i < size_; ++i) {
-        os << Get(i);
+  const int width = ceil(log10(size_));  // Adjust this value as needed
+  for (int32_t i = 0; i < size_; i += 32) {
+    os << std::setw(width) << i << ": ";
+    int32_t j = 0;
+    for (; j < 32 && i + j < size_; ++j) {
+      if (j % 8 == 0 && j != 0) {
+        os << ' ';
+      }
+      os << Get(i + j);
     }
-    return os;
+    // If the number of bits is not a multiple of 8, pad with zeros
+    for (; j < 32; ++j) {
+      if (j % 8 == 0 && j != 0) {
+        os << ' ';
+      }
+      os << '0';
+    }
+    os << '\n';
+  }
+  os << std::string(50, '-') << '\n';
+  return os;
 }
+
 
 // Writing to a binary file
 std::ostream& BitSet::WriteBinary(std::ostream& os) {
-    os.write(reinterpret_cast<const char*>(bits_.data()), bits_.size() * sizeof(uint32_t));
-    return os;
+  // Write the input flag
+  os.put(0x00);
+
+  // Write the size of the bitset
+  std::int32_t size = size_;
+  os.write(reinterpret_cast<const char*>(&size), sizeof(size));
+
+  // Write the data
+  for (size_t i = 0; i < bits_.size(); ++i) {
+    os.write(reinterpret_cast<const char*>(&bits_[i]), sizeof(bits_[i]));
+
+    // Write the checksum byte after every 32 bytes
+    if ((i + 1) % 8 == 0) {
+      char checksum = 0;
+      for (size_t j = i - 7; j <= i; ++j) {
+        checksum ^= bits_[j] & 0xff;
+        checksum ^= (bits_[j] >> 8) & 0xff;
+        checksum ^= (bits_[j] >> 16) & 0xff;
+        checksum ^= (bits_[j] >> 24) & 0xff;
+      }
+      os.put(checksum);
+    }
+  }
+
+  // Write the terminating sequence
+  os.put(0xff);
+
+  return os;
 }
 
 // Reading from a text file
 std::istream& BitSet::ReadTxt(std::istream& is) {
-    for (int32_t i = 0; i < size_; ++i) {
-        bool bit;
-        is >> bit;
-        Set(i, bit);
+  std::string line;
+  while (std::getline(is, line) && line != std::string(50, '-')) {
+    std::istringstream iss(line);
+    int32_t index;
+    char colon;
+    iss >> index >> colon;
+    for (int32_t i = 0; i < 32; ++i) {
+      char bit;
+      if (i % 8 == 0 && i != 0) {
+        iss.ignore();  // Skip the space
+      }
+      iss >> bit;
+      // Ignore the padding zeros
+      if (index + i < size_) {
+        Set(index + i, bit == '1');
+      }
     }
-    return is;
+  }
+  return is;
 }
-
 // Reading from a binary file
 std::istream& BitSet::ReadBinary(std::istream& is) {
-    is.read(reinterpret_cast<char*>(bits_.data()), bits_.size() * sizeof(uint32_t));
+  // Read and check the input flag
+  if (is.get() != 0x00) {
+    is.setstate(std::ios_base::failbit);
     return is;
+  }
+
+  // Read the size of the bitset
+  std::int32_t size;
+  is.read(reinterpret_cast<char*>(&size), sizeof(size));
+  Resize(size);
+
+  // Read the data
+  for (size_t i = 0; i < bits_.size(); ++i) {
+    is.read(reinterpret_cast<char*>(&bits_[i]), sizeof(bits_[i]));
+
+    // Check the checksum byte after every 32 bytes
+    if ((i + 1) % 8 == 0) {
+      char checksum = 0;
+      for (size_t j = i - 7; j <= i; ++j) {
+        checksum ^= bits_[j] & 0xff;
+        checksum ^= (bits_[j] >> 8) & 0xff;
+        checksum ^= (bits_[j] >> 16) & 0xff;
+        checksum ^= (bits_[j] >> 24) & 0xff;
+      }
+      if (is.get() != checksum) {
+        is.setstate(std::ios_base::failbit);
+        return is;
+      }
+    }
+  }
+
+  // Check the terminating sequence
+  if (is.get() != 0xff) {
+    is.setstate(std::ios_base::failbit);
+    return is;
+  }
+
+  return is;
 }
