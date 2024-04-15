@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <cassert>
 #include <cmath>
+#include <sstream>
 
 
 
@@ -212,7 +213,7 @@ std::ostream& BitSet::WriteBinary(std::ostream& os) {
 std::istream& BitSet::ReadTxt(std::istream& is) {
   std::string line;
   while (std::getline(is, line) && line != std::string(50, '-')) {
-    std::istringstream iss(line);
+    std::istringstream iss{line};
     int32_t index;
     char colon;
     iss >> index >> colon;
