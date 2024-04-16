@@ -14,12 +14,12 @@ struct value_as_type {
   static constexpr const T value = Value;
 };
 
-TEST_CASE_TEMPLATE("bar", T, int, char, long long, double, std::string) {
+TEST_CASE_TEMPLATE("bar", T, int, char, long long, double) {
   SUBCASE("Testing StackArrT class") {
     SUBCASE("Testing methods") {
       StackArrT<T> arr;
-      T val = "string";
-      T val1 = "string";
+      T val = 123;
+      T val1 = 123;
       arr.Push(val);
       CHECK(arr.Top() == val);
       arr.Push(val1);
