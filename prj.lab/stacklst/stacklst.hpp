@@ -14,7 +14,7 @@ class StackLst{
 
   StackLst(const StackLst&);
 
-  StackLst(StackLst&&) noexcept;
+  StackLst(StackLst&& rhs) noexcept;
 
   ~StackLst();
 

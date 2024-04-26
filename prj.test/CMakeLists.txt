@@ -26,5 +26,8 @@ target_link_libraries(test_queuelstpr queuelstpr)
 add_executable(test_bitset test_bitset.cpp)
 target_link_libraries(test_bitset bitset)
 
-add_executable(test_stackarrt test_stackarrt.cpp)
+add_executable(test_stackarrt test_stackarrt.cpp generate.hpp)
 target_link_libraries(test_stackarrt stackarrt complex)
+
+add_executable(testt testt.cpp)
+target_link_libraries(testt bitset)

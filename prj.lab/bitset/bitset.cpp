@@ -4,7 +4,6 @@
 #include "BitSet.hpp"
 #include <iostream>
 #include <iomanip>
-#include <cassert>
 #include <cmath>
 #include <sstream>
 
@@ -164,12 +163,12 @@ std::ostream& BitSet::WriteTxt(std::ostream& os) const {
       os << Get(i + j);
     }
     // If the number of bits is not a multiple of 8, pad with zeros
-    for (; j < 32; ++j) {
+    /*for (; j < 32; ++j) {
       if (j % 8 == 0 && j != 0) {
         os << ' ';
       }
       os << '0';
-    }
+    }*/
     os << '\n';
   }
   os << std::string(50, '-') << '\n';
@@ -217,7 +216,7 @@ std::istream& BitSet::ReadTxt(std::istream& is) {
     int32_t index;
     char colon;
     iss >> index >> colon;
-    for (int32_t i = 0; i < 32; ++i) {
+    for (int32_t i = 0; i < line.size(); ++i) {
       char bit;
       if (i % 8 == 0 && i != 0) {
         iss.ignore();  // Skip the space
