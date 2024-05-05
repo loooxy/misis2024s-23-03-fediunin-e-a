@@ -1,4 +1,6 @@
-CMake Error at CMakeLists.txt:20 (add_subdirectory):
-  add_subdirectory given source "prj.app" which is not an existing directory.
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    BUILD_WITH_SAMPLES
 
 
