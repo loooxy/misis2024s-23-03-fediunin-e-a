@@ -10,8 +10,7 @@
 class Command {
   public:
     double value;
-    Command(double const& value) : value(value) {
-    }
+    Command(double const& value) : value(value) {}
     virtual ~Command() = default;
     virtual double execute(double arg) = 0;
     std::istream& readFrom(std::istream& istrm) noexcept;
@@ -59,28 +58,31 @@ class DivCommand : public Command {
 
 class Calculator {
   private:
-    std::queue<std::unique_ptr<Command> > commands;
+  std::vector<std::unique_ptr<Command>> commands;
 
   public:
-    void addCommand(std::unique_ptr<Command> command) {
-      commands.push(std::move(command));
-    }
+  void addCommand(std::unique_ptr<Command> command) {
+    commands.push_back(std::move(command));
+  }
 
-    double executeCommands(double arg) {
-      while (!commands.empty()) {
-        arg = commands.front()->execute(arg);
-        commands.pop();
-      }
-      return arg;
+  double executeCommands(double arg) {
+    for (auto& command : commands) {
+      arg = command->execute(arg);
     }
+    commands.clear(); // Clear the commands after executing them
+    return arg;
+  }
 
-    void revCommands(int n) {
-      for (int i = 0; i < n && !commands.empty(); i++) {
-        commands.pop();
-      }
+  void revCommands(int n) {
+    if (n <= commands.size()) {
+      commands.erase(commands.end() - n, commands.end());
+    } else {
+      throw std::invalid_argument("Not enough commands to reverse");
     }
+  }
 };
 
+/*
 std::istream& Command::readFrom(std::istream& istrm) noexcept {
   std::string command;
   std::string value;
@@ -93,30 +95,39 @@ std::istream& Command::readFrom(std::istream& istrm) noexcept {
     *this = MulCommand(std::stod(value));
   } else if (command == "div") {
     *this = DivCommand(std::stod(value));
-  } else {
+  }
+  else {
     throw std::invalid_argument("Invalid command");
   }
   return istrm;
-}
+}*/
 
 int main() {
   Calculator calculator;
-  Command* command;
   std::string commandType;
   double value;
-  while (std::cin >> commandType >> value) {
+  while (std::cin >> commandType) {
     if (commandType == "ADD") {
-      command = new AddCommand(value);
+      std::cin >> value;
+      calculator.addCommand(std::make_unique<AddCommand>(value));
     } else if (commandType == "SUB") {
-      command = new SubCommand(value);
+      std::cin >> value;
+      calculator.addCommand(std::make_unique<SubCommand>(value));
     } else if (commandType == "MUL") {
-      command = new MulCommand(value);
+      std::cin >> value;
+      calculator.addCommand(std::make_unique<MulCommand>(value));
     } else if (commandType == "DIV") {
-      command = new DivCommand(value);
+      std::cin >> value;
+      calculator.addCommand(std::make_unique<DivCommand>(value));
+    } else if (commandType == "REV") {
+      std::cin >> value;
+      calculator.revCommands(static_cast<int>(value));
+    } else if (commandType == "OUT") {
+      std::cin >> value;
+      std::cout << calculator.executeCommands(value) << std::endl;
     } else {
-      //std::cin.setstate(std::ios_base::failbit)
+      std::cout << "INCORRECT INPUT" << std::endl;
+      std::cin.setstate(std::ios_base::failbit);
     }
-    calculator.addCommand(std::unique_ptr<Command>(command));
   }
-
 }
