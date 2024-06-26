@@ -56,7 +56,7 @@ struct Complex{
 
   //! \brief Сравнение комплексного и вещественного чисел на равенство.
   [[nodiscard]]bool operator==(const double& var) const noexcept {return (std::abs(re - var) <
-                                  std::numeric_limits<double>::epsilon() && im < 2 * std::numeric_limits<double>::epsilon());}
+                                  std::numeric_limits<double>::epsilon() && std::abs(im) < 2 * std::numeric_limits<double>::epsilon());}
 
   //! \brief Сравнение комплексных чисел на неравенство. \sa Complex::operator==
   [[nodiscard]]bool operator!=(const Complex& complex) const noexcept {return !operator==(complex);}

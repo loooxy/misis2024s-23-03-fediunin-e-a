@@ -101,8 +101,20 @@ BitSet BitSet::operator~() {
 }
 
 // Comparison operators
-bool BitSet::operator==(const BitSet& rhs) const noexcept {
-    return size_ == rhs.size_ && bits_ == rhs.bits_;
+bool BitSet::operator==(const BitSet& rhs) const noexcept
+{
+  if (size_ != rhs.size_)
+    return false;
+
+  for (int i = 0; i < bits_.size() - 1; ++i)
+    if (bits_[i] != rhs.bits_[i])
+      return false;
+
+  for (int i = (bits_.size() - 1) * 32; i < size_; ++i)
+    if (Get(i) != rhs.Get(i))
+      return false;
+
+  return true;
 }
 
 bool BitSet::operator!=(const BitSet& rhs) const noexcept {
@@ -185,7 +197,7 @@ std::ostream& BitSet::WriteBinary(std::ostream& os) {
   std::int32_t size = size_;
   os.write(reinterpret_cast<const char*>(&size), sizeof(size));
 
-  // Write the data
+  // Write the bits_
   for (size_t i = 0; i < bits_.size(); ++i) {
     os.write(reinterpret_cast<const char*>(&bits_[i]), sizeof(bits_[i]));
 
@@ -243,7 +255,7 @@ std::istream& BitSet::ReadBinary(std::istream& is) {
   is.read(reinterpret_cast<char*>(&size), sizeof(size));
   Resize(size);
 
-  // Read the data
+  // Read the bits_
   for (size_t i = 0; i < bits_.size(); ++i) {
     is.read(reinterpret_cast<char*>(&bits_[i]), sizeof(bits_[i]));
 

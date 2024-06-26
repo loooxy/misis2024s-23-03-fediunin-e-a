@@ -65,20 +65,25 @@ private:
 
 class BitProxy {
 public:
-    BitProxy(BitSet& bitset, std::int32_t idx) : bitset_(bitset), idx_(idx) {}
-
-    BitProxy& operator=(bool val) {
-        bitset_.Set(idx_, val);
-        return *this;
-    }
-
-    operator bool() const {
-        return bitset_.Get(idx_);
-    }
-
-private:
-    BitSet& bitset_;
-    std::int32_t idx_ = 0;
+  BitProxy() = delete;
+  BitProxy(BitSet& bs, int ind) : bs_(bs), ind_(ind) {}
+  ~BitProxy() = default;
+  BitProxy(const BitProxy&) = delete;
+  BitProxy(BitProxy&&) noexcept = default;
+  BitProxy& operator=(const BitProxy& rhs)
+  {
+    bs_.Set(ind_, rhs.bs_.Get(rhs.ind_));
+    return *this;
+  };
+  BitProxy& operator=(BitProxy&& rhs) noexcept {
+    bs_.Set(ind_, rhs.bs_.Get(rhs.ind_));
+    return *this;
+  };
+  BitProxy& operator=(const bool v) { bs_.Set(ind_, v); return *this; }
+  operator bool() const { return bs_.Get(ind_); }
+ private:
+  BitSet& bs_;
+  int ind_ = -1;
 };
 
 std::ostream& operator<<(std::ostream&, const BitSet&);
